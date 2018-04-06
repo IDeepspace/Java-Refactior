@@ -13,7 +13,7 @@ public class Security {
     public boolean hasAccess(User user, Permission permission, ImmutableList<Permission> permissions) {
 
         boolean isAccess = false;
-        if (user == null) {
+        /*if (user == null) {
             return isAccess;
         }
 
@@ -30,6 +30,11 @@ public class Security {
         }
 
         if (this.securityChecker.checkPermission(user, permission) || permissions.contains(permission)) {
+            isAccess = true;
+        }*/
+
+        //Refactor: Replaced the Nexted Conditional with Guard Clauses
+        if (securityChecker.isAdmin()|| this.securityChecker.checkPermission(user, permission) || permissions.contains(permission)) {
             isAccess = true;
         }
 

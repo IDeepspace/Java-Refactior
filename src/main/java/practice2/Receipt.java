@@ -18,9 +18,11 @@ public class Receipt {
         for (Product product : products) {
             OrderItem curItem = findOrderItemByProduct(items, product);
 
-            BigDecimal reducedPrice = product.getPrice()
+            /*BigDecimal reducedPrice = product.getPrice()
                     .multiply(product.getDiscountRate())
-                    .multiply(new BigDecimal(curItem.getCount()));
+                    .multiply(new BigDecimal(curItem.getCount()));*/
+
+            BigDecimal reducedPrice = calculateProductDisCount(product, curItem);
 
             subTotal = subTotal.subtract(reducedPrice);
         }
@@ -29,6 +31,14 @@ public class Receipt {
 
         return grandTotal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
+    //Refactor
+    private BigDecimal calculateProductDisCount(Product product, OrderItem item) {
+        return product.getPrice()
+            .multiply(product.getDiscountRate())
+            .multiply(new BigDecimal(item.getCount()));
+    }
+
 
 
     private OrderItem findOrderItemByProduct(List<OrderItem> items, Product product) {
